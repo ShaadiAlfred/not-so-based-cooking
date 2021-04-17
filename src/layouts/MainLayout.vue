@@ -6,39 +6,29 @@
           flat
           dense
           round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          icon="home"
+          aria-label="Home"
+          to="/"
         />
 
         <q-toolbar-title>
-          Quasar App
+          Not So Based Cooking
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-space />
+
+        <q-btn flat round dense icon="search" class="q-mr-xs" />
+        <q-btn
+          flat
+          round
+          dense
+          icon="dark_mode"
+          :color="this.$q.dark.isActive ? 'black' : 'white'"
+          class="q-mr-xs"
+          @click="toggleDarkMode()"
+        />
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -47,60 +37,29 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
-
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
-  data () {
-    return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
+  methods: {
+    toggleDarkMode() {
+      this.$q.dark.toggle();
+    },
+  },
+  watch: {
+    '$q.dark.isActive' (val) {
+      if (val) {
+        document.head.querySelector('link[rel="icon"]').href = 'icons/favicon.png';
+        this.$q.cookies.set('dark_mode', 'true', { expires: '365d' });
+      } else {
+        document.head.querySelector('link[rel="icon"]').href = 'icons/favicon_2.png';
+        this.$q.cookies.set('dark_mode', 'false', { expires: '365d' });
+      }
+    },
+  },
+  created() {
+    if (this.$q.cookies.has('dark_mode')) {
+      this.$q.cookies.get('dark_mode') ? this.$q.dark.set(true) : this.$q.dark.set(false);
+    } else {
+      this.$q.cookies.set('dark_mode', 'false', { expires: '365d' });
     }
   }
 }
