@@ -6,7 +6,9 @@
 // Configuration for your app
 // https://v1.quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
-const ESLintPlugin = require('eslint-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin');
+
+const env = require('dotenv').config().parsed;
 
 module.exports = function (/* ctx */) {
   return {
@@ -20,7 +22,7 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
     boot: [
-
+      'firebase',
       'axios',
     ],
 
@@ -45,6 +47,22 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: {
+        "TITLE": "Not So Based Cooking 👨‍🍳",
+        "FIREBASE_CONFIG": {
+          "apiKey": env['FIREBASE_apiKey'],
+          "authDomain": env['FIREBASE_authDomain'],
+          "databaseURL": env['FIREBASE_databaseURL'],
+          "projectId": env['FIREBASE_projectId'],
+          "storageBucket": env['FIREBASE_storageBucket'],
+          "messagingSenderId": env['FIREBASE_messagingSenderId'],
+          "appId": env['FIREBASE_appId'],
+          "measurementId": env['FIREBASE_measurementId'],
+        },
+        "RECAPTCHA_SITE_KEY": env['RECAPTCHA_SITE_KEY'],
+        // "RECAPTCHA_SECRET_KEY": env['RECAPTCHA_SECRET_KEY'],
+      },
+
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       // transpile: false,
@@ -82,7 +100,12 @@ module.exports = function (/* ctx */) {
     framework: {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
-      config: {},
+      config: {
+        loading: {
+          delay: 200,
+          message: 'The chef is cooking 👨‍🍳',
+        }
+      },
 
       // Possible values for "importStrategy":
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
@@ -97,12 +120,22 @@ module.exports = function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+        'Meta',
+        'Cookies',
+        'Notify',
+      ]
     },
 
     // animations: 'all', // --- includes all animations
     // https://v1.quasar.dev/options/animations
-    animations: [],
+    animations: [
+      'bounceInUp',
+      'bounceOutDown',
+      'fadeIn',
+      'fadeOut',
+    ],
 
     // https://v1.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
@@ -114,8 +147,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `NotSoBasedCooking`,
-        short_name: `NotSoBasedCooking`,
+        name: `Not So Based Cooking`,
+        short_name: `Not So Based Cooking`,
         description: `Soy app for recipes`,
         display: 'standalone',
         orientation: 'portrait',
@@ -123,30 +156,9 @@ module.exports = function (/* ctx */) {
         theme_color: '#027be3',
         icons: [
           {
-            src: 'icons/icon-128x128.png',
-            sizes: '128x128',
+            src: 'icons/icon.png',
             type: 'image/png'
           },
-          {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-256x256.png',
-            sizes: '256x256',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
         ]
       }
     },
