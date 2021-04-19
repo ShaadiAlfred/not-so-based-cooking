@@ -1,26 +1,45 @@
-# NotSoBasedCooking (not_so_based_cooking)
+# [Not So Based Cooking](http://not-so-based-cooking.herokuapp.com/)
 
-Soy app for recipes
+Soy dev's app for recipes
 
-## Install the dependencies
+## Features to be added
+
+- [ ] Search fucntionality
+- [ ] Firebase authentication
+- [ ] Add recipes using markdown editor
+
+## [Reference behind the name](https://www.youtube.com/watch?v=ykNEkiYr0QM)
+
+[https://based.cooking](https://based.cooking)
+
+---
+
+## Quasar Instructions
+
+### Install the dependencies
+
 ```bash
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+#### Start the app in development mode (hot-code reloading, error reporting, etc.)
+
 ```bash
 quasar dev
 ```
 
-### Lint the files
+#### Lint the files
+
 ```bash
 npm run lint
 ```
 
-### Build the app for production
+#### Build the app for production
+
 ```bash
 quasar build
 ```
 
-### Customize the configuration
+#### Customize the configuration
+
 See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
