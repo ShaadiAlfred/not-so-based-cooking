@@ -37,8 +37,14 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 export default {
   name: 'MainLayout',
+  async mounted() {
+    await firebase.auth().signInAnonymously();
+  },
   methods: {
     toggleDarkMode() {
       this.$q.dark.toggle();
