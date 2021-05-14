@@ -6,6 +6,7 @@
           flat
           dense
           round
+          title="Home"
           icon="home"
           aria-label="Home"
           to="/"
@@ -17,11 +18,34 @@
 
         <q-space />
 
+        <q-btn
+          flat
+          round
+          dense
+          icon="logout"
+          title="Sign Out"
+          class="q-mr-xs"
+          @click="signOut"
+          v-if="isSignedIn"
+        />
+
+        <q-btn
+          flat
+          round
+          dense
+          icon="login"
+          title="Sign In"
+          :to="{ name: 'sign_in' }"
+          class="q-mr-xs"
+          v-else
+        />
+
         <q-btn flat round dense icon="search" class="q-mr-xs" />
         <q-btn
           flat
           round
           dense
+          title="Toggle dark mode"
           icon="dark_mode"
           :color="this.$q.dark.isActive ? 'black' : 'white'"
           class="q-mr-xs"
@@ -42,13 +66,29 @@ import 'firebase/auth';
 
 export default {
   name: 'MainLayout',
-  async mounted() {
-    await firebase.auth().signInAnonymously();
+  data() {
+    return {
+      isSignedIn: false,
+    }
   },
   methods: {
     toggleDarkMode() {
       this.$q.dark.toggle();
     },
+    async signOut() {
+      await firebase.auth().signOut();
+      await firebase.auth().signInAnonymously();
+
+      this.$q.notify({
+        type: 'positive',
+        icon: 'done',
+        message: 'Signed out successfully!'
+      });
+
+      if (this.$route.path === '/recipe/new/md') {
+        await this.$router.push({ path: '/' });
+      }
+    }
   },
   watch: {
     '$q.dark.isActive' (val) {
@@ -61,7 +101,17 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
+    await firebase.auth().signInAnonymously();
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.isSignedIn = !user.isAnonymous;
+      } else {
+        this.isSignedIn = false;
+      }
+    });
+
     if (this.$q.cookies.has('dark_mode')) {
       this.$q.cookies.get('dark_mode') ? this.$q.dark.set(true) : this.$q.dark.set(false);
     } else {
