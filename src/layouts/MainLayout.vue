@@ -17,6 +17,15 @@
         </q-toolbar-title>
 
         <q-space />
+        <q-btn
+          flat
+          dense
+          class="q-mr-xs"
+          :to="{ path: 'sign_up' }"
+          v-if="!isSignedIn"
+        >
+          Sign Up
+        </q-btn>
 
         <q-btn
           flat
@@ -102,8 +111,6 @@ export default {
     },
   },
   async created() {
-    await firebase.auth().signInAnonymously();
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.isSignedIn = !user.isAnonymous;

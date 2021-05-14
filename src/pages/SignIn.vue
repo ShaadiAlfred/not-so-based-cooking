@@ -11,9 +11,10 @@
         v-model="email"
         label="Your email *"
         hint="example@gmail.com"
-        lazy-rules
         required
         type="email"
+        autofocus
+        lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
 

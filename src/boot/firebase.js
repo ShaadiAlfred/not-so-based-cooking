@@ -1,5 +1,9 @@
-import {initFirebase} from 'src/services/firebase';
+import { initFirebase } from 'src/services/firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-export default () => {
+export default async () => {
   const firebaseInstance = initFirebase(process.env.FIREBASE_CONFIG);
+
+  await firebase.auth().signInAnonymously();
 }

@@ -12,9 +12,10 @@
         v-model="email"
         label="Your email *"
         hint="example@gmail.com"
-        lazy-rules
         required
         type="email"
+        autofocus
+        lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
 
@@ -23,9 +24,9 @@
         v-model="password"
         ref="password"
         label="Password *"
-        lazy-rules
         required
         type="password"
+        lazy-rules
         :rules="[val => val && val.length > 0 || 'Cannot be empty']"
       />
 
@@ -66,15 +67,20 @@ export default {
   },
   methods: {
     async signUp() {
-      console.log({
-        email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword
-      });
+      const credential = await firebase.auth.EmailAuthProvider.credential(this.email, this.password);
+
+      await firebase.auth().currentUser.linkWithCredential(credential);
 
       await firebase.auth().signOut();
-      const user = await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
-      console.log({ user })
+
+      await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+
+      this.$q.notify({
+        type: 'positive',
+        message: 'Signed up successfully!'
+      });
+
+      await this.$router.push({ path: '/' });
     },
     reset() {
       this.email = null;
