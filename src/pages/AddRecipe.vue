@@ -491,7 +491,7 @@ export default {
       this.isSubmitting = false;
     },
     onReset() {
-      console.log('Form reset');
+      // TODO
     },
     handleError(errorMessage) {
       this.isSubmitting = false;
