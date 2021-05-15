@@ -85,6 +85,11 @@ export default {
       isThereMore: true,
     }
   },
+  computed: {
+    isSignedIn() {
+      return this.$store.state.isSignedIn;
+    }
+  },
   methods: {
     async loadMore(index, done) {
       if (this.isThereMore) {
