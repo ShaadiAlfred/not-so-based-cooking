@@ -21,6 +21,11 @@ const routes = [
         component: () => import('pages/AddRecipe.vue'),
       },
       {
+        path: 'recipe/new/md',
+        name: 'add_recipe_with_markdown',
+        component: () => import('pages/AddRecipeWithMarkdown.vue'),
+      },
+      {
         path: 'recipe/:slug',
         name: 'recipe',
         component: () => import('pages/Recipe.vue'),
