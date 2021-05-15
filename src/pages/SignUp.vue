@@ -9,12 +9,22 @@
     >
       <q-input
         filled
+        v-model="name"
+        label="This will be displayed in the recipes you add"
+        required
+        type="text"
+        autofocus
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
+      />
+
+      <q-input
+        filled
         v-model="email"
         label="Your email *"
         hint="example@gmail.com"
         required
         type="email"
-        autofocus
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
@@ -60,6 +70,7 @@ export default {
   name: 'SignUp',
   data() {
     return {
+      name: null,
       email: null,
       password: null,
       confirmPassword: null,
@@ -74,6 +85,16 @@ export default {
       await firebase.auth().signOut();
 
       await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+
+      const user = await firebase.auth().currentUser;
+
+      try {
+        await user.updateProfile({
+          displayName: this.name,
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
       this.$q.notify({
         type: 'positive',
