@@ -296,7 +296,7 @@
 
 <script>
 import VueRecaptcha from 'vue-recaptcha';
-import {storeRecipe} from 'src/helpers/recipes';
+import { storeRecipe } from 'src/helpers/recipes';
 
 export default {
   name: 'AddRecipe',
