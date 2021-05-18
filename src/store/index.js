@@ -20,6 +20,22 @@ export default function (/* { ssrContext } */) {
     modules: {
       recipes,
     },
+    state: () => {
+      return {
+        isSignedIn: false,
+        signedUser: null,
+      };
+    },
+    mutations: {
+      setSignedUser: (state, userName) => {
+        state.isSignedIn = true;
+        state.signedUser = userName;
+      },
+      unSetSignedUser: state => {
+        state.isSignedIn = false;
+        state.signedUser = null;
+      }
+    },
 
     // enable strict mode (adds overhead!)
     // for dev mode only

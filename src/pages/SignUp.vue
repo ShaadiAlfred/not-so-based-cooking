@@ -9,14 +9,13 @@
     >
       <q-input
         filled
-        autofocus
         v-model="name"
-        label="The name will be shown on your recipes"
-        hint="John Smith"
+        label="This will be displayed in the recipes you add"
         required
         type="text"
+        autofocus
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Cannot be empty!']"
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
 
       <q-input
@@ -87,10 +86,12 @@ export default {
 
       await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
 
+      const user = await firebase.auth().currentUser;
+
       try {
-        const user = firebase.auth().currentUser;
-        
-        await user.updateProfile({ displayName: this.name });
+        await user.updateProfile({
+          displayName: this.name,
+        });
       } catch (e) {
         console.error(e);
       }

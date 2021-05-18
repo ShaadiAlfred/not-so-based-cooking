@@ -75,9 +75,9 @@ import 'firebase/auth';
 
 export default {
   name: 'MainLayout',
-  data() {
-    return {
-      isSignedIn: false,
+  computed: {
+    isSignedIn() {
+      return this.$store.state.isSignedIn;
     }
   },
   methods: {
@@ -113,9 +113,13 @@ export default {
   async created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.isSignedIn = !user.isAnonymous;
+        if (! user.isAnonymous) {
+          this.$store.commit('setSignedUser', user.displayName);
+        } else {
+          this.$store.commit('unSetSignedUser');
+        }
       } else {
-        this.isSignedIn = false;
+        this.$store.commit('unSetSignedUser');
       }
     });
 

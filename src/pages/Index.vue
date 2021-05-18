@@ -61,7 +61,7 @@
           icon="add"
           color="accent"
           v-if="showFab"
-          :to="{ name: 'add_recipe' }"
+          :to="{ name: isSignedIn ? 'add_recipe_with_markdown' : 'add_recipe' }"
         />
       </transition>
     </q-page-sticky>
@@ -83,6 +83,11 @@ export default {
       recipes: [],
       showFab: false,
       isThereMore: true,
+    }
+  },
+  computed: {
+    isSignedIn() {
+      return this.$store.state.isSignedIn;
     }
   },
   methods: {
