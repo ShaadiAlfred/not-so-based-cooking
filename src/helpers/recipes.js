@@ -39,7 +39,7 @@ export async function getPublishedRecipes (numberOfShownRecipes) {
     const querySnapshot = await (recipesCollection
       .where('is_published', '==', true)
       .orderBy('created_at', 'desc')
-      .limit(numberOfShownRecipes + 1)
+      .limit(numberOfShownRecipes + 4)
       .get());
 
     if (! querySnapshot.empty) {

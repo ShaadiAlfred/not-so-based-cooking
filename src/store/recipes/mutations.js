@@ -1,11 +1,13 @@
 export function setCurrent (state, recipe) {
   state.current = recipe;
-  state.current.ingredients = state.current.ingredients.map(ingredient => {
-    return {
-      text: ingredient,
-      checked: false,
-    }
-  })
+  if ('ingredients' in state.current) {
+    state.current.ingredients = state.current.ingredients.map(ingredient => {
+      return {
+        text: ingredient,
+        checked: false,
+      }
+    });
+  }
 }
 
 export function setIngredientsCheckValue (state, checkValue) {
