@@ -4,9 +4,11 @@ Soy dev's app for recipes
 
 ## Features to be added
 
-- [ ] Search fucntionality
-- [ ] Firebase authentication
-- [ ] Add recipes using markdown editor
+- [x] Firebase authentication 🥳
+- [x] Add recipes using markdown editor 🥳
+- [ ] Search functionality
+- [ ] Show recipes with the same tag
+- [ ] OAuth (sign in with Google, etc...)
 
 ## [Reference behind the name](https://www.youtube.com/watch?v=ykNEkiYr0QM)
 
