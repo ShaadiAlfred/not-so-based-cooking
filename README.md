@@ -2,6 +2,8 @@
 
 Soy dev's app for recipes
 
+http://not-so-based-cooking.herokuapp.com/
+
 ## Features to be added
 
 - [x] Firebase authentication 🥳
