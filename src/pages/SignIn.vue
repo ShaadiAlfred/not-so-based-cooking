@@ -61,7 +61,11 @@ export default {
           message: 'Signed in successfully!'
         });
 
-        await this.$router.push({ path: '/' });
+        if (this.$route.query.from) {
+          await this.$router.push({ path: this.$route.query.from });
+        } else {
+          await this.$router.push({ path: '/' });
+        }
       } catch (e) {
         if (e.code === 'auth/user-not-found') {
           this.$q.notify({

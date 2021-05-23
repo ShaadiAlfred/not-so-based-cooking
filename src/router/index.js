@@ -32,7 +32,7 @@ export default function ({ store }) {
         return next();
       }
 
-      return next({ name: 'sign_in' });
+      return next({ name: 'sign_in', query: { from: to.path } });
     }
 
     return next();
