@@ -53,6 +53,7 @@ export default {
       await firebase.auth().signOut();
 
       try {
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
 
         this.$q.notify({

@@ -5,5 +5,9 @@ import 'firebase/auth';
 export default async () => {
   const firebaseInstance = initFirebase(process.env.FIREBASE_CONFIG);
 
-  await firebase.auth().signInAnonymously();
+
+  if (! firebase.auth().currentUser) {
+    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    await firebase.auth().signInAnonymously();
+  }
 }
