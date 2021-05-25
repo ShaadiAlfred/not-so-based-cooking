@@ -75,6 +75,8 @@
 <script>
 import { getPublishedRecipes } from 'src/helpers/recipes';
 import { intoPairs } from 'src/helpers/general';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
   name: 'Index',
@@ -113,8 +115,16 @@ export default {
   },
   async created() {
     this.$q.loading.show();
-    (await getPublishedRecipes(this.recipes.length)).forEach(recipe => this.recipes.push(recipe));
-    this.$q.loading.hide();
+
+    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user == null) {
+        await firebase.auth().signInAnonymously();
+      } else {
+        (await getPublishedRecipes(this.recipes.length)).forEach(recipe => this.recipes.push(recipe));
+        this.$q.loading.hide();
+        unsubscribe();
+      }
+    });
   },
   meta: {
     title: process.env.TITLE,
