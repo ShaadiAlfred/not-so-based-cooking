@@ -111,6 +111,14 @@ export default {
     },
   },
   async created() {
+    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user == null) {
+        await firebase.auth().signInAnonymously();
+      } else {
+        unsubscribe();
+      }
+    });
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         if (! user.isAnonymous) {

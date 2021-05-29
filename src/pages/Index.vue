@@ -117,12 +117,10 @@ export default {
     this.$q.loading.show();
 
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-      if (user == null) {
-        await firebase.auth().signInAnonymously();
-      } else {
+      if (user != null) {
+        unsubscribe();
         (await getPublishedRecipes(this.recipes.length)).forEach(recipe => this.recipes.push(recipe));
         this.$q.loading.hide();
-        unsubscribe();
       }
     });
   },
